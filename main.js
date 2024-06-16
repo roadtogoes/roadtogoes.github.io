@@ -30,7 +30,7 @@ function updateLeader(counter1Value, counter2Value) {
     } else if (counter2Value > counter1Value) {
         leaderElement.textContent = "Santiago está en cabeza";
     } else {
-        leaderElement.textContent = "";
+        leaderElement.textContent = "Empate";
     }
 }
 
@@ -46,7 +46,7 @@ onValue(counter2Ref, (snapshot) => {
     const counter2Value = snapshot.val();
     document.getElementById('counter2').textContent = counter2Value;
     const counter1Value = parseInt(document.getElementById('counter1').textContent);
-    updateLeader(counter2Value, counter1Value);
+    updateLeader(counter1Value, counter2Value);
 });
 
 // Increment the counters
