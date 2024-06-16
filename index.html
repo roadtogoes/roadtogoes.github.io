@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador Persistente</title>
+    <title>Contador en Tiempo Real</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,27 +35,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Contador Persistente</h1>
+        <h1>Contador en Tiempo Real</h1>
         <p>Haz clic en el botón para incrementar el contador.</p>
         <button id="incrementBtn">Incrementar</button>
         <div id="counter">0</div>
     </div>
 
-    <script>
-        // Obtener el valor del contador de localStorage
-        let counterValue = localStorage.getItem('counter') ? parseInt(localStorage.getItem('counter')) : 0;
-
-        // Mostrar el valor del contador en la página
-        const counterElement = document.getElementById('counter');
-        counterElement.textContent = counterValue;
-
-        // Obtener el botón y añadir un evento de clic
-        const incrementBtn = document.getElementById('incrementBtn');
-        incrementBtn.addEventListener('click', () => {
-            counterValue++;
-            counterElement.textContent = counterValue;
-            localStorage.setItem('counter', counterValue);
-        });
-    </script>
+    <!-- Firebase SDKs -->
+    <script type="module" src="main.js"></script>
 </body>
 </html>
