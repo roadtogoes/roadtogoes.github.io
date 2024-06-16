@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
-import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
+import { getDatabase, ref, onValue, runTransaction, set } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -34,6 +34,11 @@ document.getElementById('incrementBtn1').addEventListener('click', () => {
     });
 });
 
+// Reset the first counter
+document.getElementById('resetBtn1').addEventListener('click', () => {
+    set(counter1Ref, 0);
+});
+
 // Reference to the second counter in the database
 const counter2Ref = ref(db, 'counter2');
 
@@ -48,4 +53,41 @@ document.getElementById('incrementBtn2').addEventListener('click', () => {
     runTransaction(counter2Ref, (currentValue) => {
         return (currentValue || 0) + 1;
     });
+});
+
+// Reset the second counter
+document.getElementById('resetBtn2').addEventListener('click', () => {
+    set(counter2Ref, 0);
+});
+
+// Countdown Timer
+let countdownInterval;
+const countdownElement = document.getElementById('countdown');
+const startCountdownBtn = document.getElementById('startCountdownBtn');
+const resetCountdownBtn = document.getElementById('resetCountdownBtn');
+
+function startCountdown(duration) {
+    let timer = duration, hours, minutes, seconds;
+    countdownInterval = setInterval(() => {
+        hours = Math.floor(timer / 3600);
+        minutes = Math.floor((timer % 3600) / 60);
+        seconds = Math.floor(timer % 60);
+
+        countdownElement.textContent = 
+            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        if (--timer < 0) {
+            clearInterval(countdownInterval);
+        }
+    }, 1000);
+}
+
+startCountdownBtn.addEventListener('click', () => {
+    clearInterval(countdownInterval);
+    startCountdown(3600);
+});
+
+resetCountdownBtn.addEventListener('click', () => {
+    clearInterval(countdownInterval);
+    countdownElement.textContent = "01:00:00";
 });
