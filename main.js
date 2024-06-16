@@ -21,17 +21,32 @@ const db = getDatabase(app);
 // References to the counters in the database
 const counter1Ref = ref(db, 'counter1');
 const counter2Ref = ref(db, 'counter2');
-const countdownRef = ref(db, 'countdown');
+
+// Function to update the leader message
+function updateLeader(counter1Value, counter2Value) {
+    const leaderElement = document.getElementById('leader');
+    if (counter1Value > counter2Value) {
+        leaderElement.textContent = "Ramón está en cabeza";
+    } else if (counter2Value > counter1Value) {
+        leaderElement.textContent = "Santiago está en cabeza";
+    } else {
+        leaderElement.textContent = "";
+    }
+}
 
 // Get the counter values and display them
 onValue(counter1Ref, (snapshot) => {
-    const counterValue = snapshot.val();
-    document.getElementById('counter1').textContent = counterValue;
+    const counter1Value = snapshot.val();
+    document.getElementById('counter1').textContent = counter1Value;
+    const counter2Value = parseInt(document.getElementById('counter2').textContent);
+    updateLeader(counter1Value, counter2Value);
 });
 
 onValue(counter2Ref, (snapshot) => {
-    const counterValue = snapshot.val();
-    document.getElementById('counter2').textContent = counterValue;
+    const counter2Value = snapshot.val();
+    document.getElementById('counter2').textContent = counter2Value;
+    const counter1Value = parseInt(document.getElementById('counter1').textContent);
+    updateLeader(counter2Value, counter1Value);
 });
 
 // Increment the counters
@@ -54,52 +69,4 @@ document.getElementById('resetBtn1').addEventListener('click', () => {
 
 document.getElementById('resetBtn2').addEventListener('click', () => {
     set(counter2Ref, 0);
-});
-
-// Countdown Timer
-let countdownInterval;
-const countdownElement = document.getElementById('countdown');
-const startCountdownBtn = document.getElementById('startCountdownBtn');
-const resetCountdownBtn = document.getElementById('resetCountdownBtn');
-
-// Get the countdown value and display it
-onValue(countdownRef, (snapshot) => {
-    const countdownValue = snapshot.val();
-    if (countdownValue) {
-        startCountdown(countdownValue);
-    } else {
-        countdownElement.textContent = "01:00:00";
-    }
-});
-
-// Function to start the countdown
-function startCountdown(duration) {
-    let timer = duration, hours, minutes, seconds;
-    countdownInterval = setInterval(() => {
-        hours = Math.floor(timer / 3600);
-        minutes = Math.floor((timer % 3600) / 60);
-        seconds = Math.floor(timer % 60);
-
-        countdownElement.textContent = 
-            `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-        if (--timer < 0) {
-            clearInterval(countdownInterval);
-        } else {
-            set(countdownRef, timer);
-        }
-    }, 1000);
-}
-
-// Start countdown button
-startCountdownBtn.addEventListener('click', () => {
-    clearInterval(countdownInterval);
-    set(countdownRef, 3600);
-});
-
-// Reset countdown button
-resetCountdownBtn.addEventListener('click', () => {
-    clearInterval(countdownInterval);
-    set(countdownRef, null);
-    countdownElement.textContent = "01:00:00";
 });
