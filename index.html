@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador en Tiempo Real</title>
+    <title>Contadores en Tiempo Real</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,6 +20,7 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin: 10px;
         }
         button {
             padding: 10px 20px;
@@ -27,18 +28,30 @@
             margin-top: 10px;
             cursor: pointer;
         }
-        #counter {
+        .counter {
             font-size: 48px;
             margin-top: 20px;
+        }
+        .counter-container {
+            display: flex;
+            gap: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Contador en Tiempo Real</h1>
-        <p>Haz clic en el botón para incrementar el contador.</p>
-        <button id="incrementBtn">Incrementar</button>
-        <div id="counter">0</div>
+    <div class="counter-container">
+        <div class="container">
+            <h1>Contador 1</h1>
+            <p>Haz clic en el botón para incrementar el contador.</p>
+            <button id="incrementBtn1">Incrementar</button>
+            <div id="counter1" class="counter">0</div>
+        </div>
+        <div class="container">
+            <h1>Contador 2</h1>
+            <p>Haz clic en el botón para incrementar el contador.</p>
+            <button id="incrementBtn2">Incrementar</button>
+            <div id="counter2" class="counter">0</div>
+        </div>
     </div>
 
     <!-- Firebase SDKs -->
