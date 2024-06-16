@@ -18,44 +18,40 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Reference to the first counter in the database
+// References to the counters in the database
 const counter1Ref = ref(db, 'counter1');
+const counter2Ref = ref(db, 'counter2');
+const countdownRef = ref(db, 'countdown');
 
-// Get the first counter value and display it
+// Get the counter values and display them
 onValue(counter1Ref, (snapshot) => {
     const counterValue = snapshot.val();
     document.getElementById('counter1').textContent = counterValue;
 });
 
-// Increment the first counter
+onValue(counter2Ref, (snapshot) => {
+    const counterValue = snapshot.val();
+    document.getElementById('counter2').textContent = counterValue;
+});
+
+// Increment the counters
 document.getElementById('incrementBtn1').addEventListener('click', () => {
     runTransaction(counter1Ref, (currentValue) => {
         return (currentValue || 0) + 1;
     });
 });
 
-// Reset the first counter
-document.getElementById('resetBtn1').addEventListener('click', () => {
-    set(counter1Ref, 0);
-});
-
-// Reference to the second counter in the database
-const counter2Ref = ref(db, 'counter2');
-
-// Get the second counter value and display it
-onValue(counter2Ref, (snapshot) => {
-    const counterValue = snapshot.val();
-    document.getElementById('counter2').textContent = counterValue;
-});
-
-// Increment the second counter
 document.getElementById('incrementBtn2').addEventListener('click', () => {
     runTransaction(counter2Ref, (currentValue) => {
         return (currentValue || 0) + 1;
     });
 });
 
-// Reset the second counter
+// Reset the counters
+document.getElementById('resetBtn1').addEventListener('click', () => {
+    set(counter1Ref, 0);
+});
+
 document.getElementById('resetBtn2').addEventListener('click', () => {
     set(counter2Ref, 0);
 });
@@ -66,6 +62,17 @@ const countdownElement = document.getElementById('countdown');
 const startCountdownBtn = document.getElementById('startCountdownBtn');
 const resetCountdownBtn = document.getElementById('resetCountdownBtn');
 
+// Get the countdown value and display it
+onValue(countdownRef, (snapshot) => {
+    const countdownValue = snapshot.val();
+    if (countdownValue) {
+        startCountdown(countdownValue);
+    } else {
+        countdownElement.textContent = "01:00:00";
+    }
+});
+
+// Function to start the countdown
 function startCountdown(duration) {
     let timer = duration, hours, minutes, seconds;
     countdownInterval = setInterval(() => {
@@ -78,16 +85,21 @@ function startCountdown(duration) {
 
         if (--timer < 0) {
             clearInterval(countdownInterval);
+        } else {
+            set(countdownRef, timer);
         }
     }, 1000);
 }
 
+// Start countdown button
 startCountdownBtn.addEventListener('click', () => {
     clearInterval(countdownInterval);
-    startCountdown(3600);
+    set(countdownRef, 3600);
 });
 
+// Reset countdown button
 resetCountdownBtn.addEventListener('click', () => {
     clearInterval(countdownInterval);
+    set(countdownRef, null);
     countdownElement.textContent = "01:00:00";
 });
