@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contadores en Tiempo Real</title>
+    <title>Boletines Estrada</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,6 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
         .container {
             background: white;
@@ -36,22 +37,33 @@
             display: flex;
             gap: 20px;
         }
+        h1 {
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
+    <h1>Boletines Estrada</h1>
     <div class="counter-container">
         <div class="container">
-            <h1>Contador 1</h1>
-            <p>Haz clic en el botón para incrementar el contador.</p>
+            <h2>Boletines 1</h2>
             <button id="incrementBtn1">Incrementar</button>
+            <button id="resetBtn1">Resetear</button>
             <div id="counter1" class="counter">0</div>
         </div>
         <div class="container">
-            <h1>Contador 2</h1>
-            <p>Haz clic en el botón para incrementar el contador.</p>
+            <h2>Boletines 2</h2>
             <button id="incrementBtn2">Incrementar</button>
+            <button id="resetBtn2">Resetear</button>
             <div id="counter2" class="counter">0</div>
         </div>
+    </div>
+    <div class="container">
+        <h2>Cuenta regresiva</h2>
+        <div id="countdown" class="counter">01:00:00</div>
+        <button id="startCountdownBtn">Iniciar Cuenta Regresiva</button>
+        <button id="resetCountdownBtn">Resetear Cuenta Regresiva</button>
     </div>
 
     <!-- Firebase SDKs -->
