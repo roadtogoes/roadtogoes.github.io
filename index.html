@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página Web</title>
+    <title>Contador Persistente</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,13 +19,43 @@
             background: white;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #counter {
+            font-size: 48px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenido a Mi Página Web</h1>
-        <p>Esta es una página de ejemplo creada con HTML.</p>
+        <h1>Contador Persistente</h1>
+        <p>Haz clic en el botón para incrementar el contador.</p>
+        <button id="incrementBtn">Incrementar</button>
+        <div id="counter">0</div>
     </div>
+
+    <script>
+        // Obtener el valor del contador de localStorage
+        let counterValue = localStorage.getItem('counter') ? parseInt(localStorage.getItem('counter')) : 0;
+
+        // Mostrar el valor del contador en la página
+        const counterElement = document.getElementById('counter');
+        counterElement.textContent = counterValue;
+
+        // Obtener el botón y añadir un evento de clic
+        const incrementBtn = document.getElementById('incrementBtn');
+        incrementBtn.addEventListener('click', () => {
+            counterValue++;
+            counterElement.textContent = counterValue;
+            localStorage.setItem('counter', counterValue);
+        });
+    </script>
 </body>
 </html>
