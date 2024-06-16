@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
-import { getDatabase, ref, onValue, runTransaction, set, push } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
+import { getDatabase, ref, onValue, runTransaction, set, push, remove } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -103,4 +103,9 @@ document.getElementById('send-message-btn').addEventListener('click', () => {
         push(chatRef, newMessage);
         messageInput.value = '';  // Clear the input
     }
+});
+
+// Clear chat messages
+document.getElementById('clear-chat-btn').addEventListener('click', () => {
+    remove(chatRef);
 });
