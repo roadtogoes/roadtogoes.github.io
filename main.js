@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
-import { getDatabase, ref, onValue, runTransaction, set } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
+import { getDatabase, ref, onValue, runTransaction, set, push } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -69,4 +69,38 @@ document.getElementById('resetBtn1').addEventListener('click', () => {
 
 document.getElementById('resetBtn2').addEventListener('click', () => {
     set(counter2Ref, 0);
+});
+
+// Chat functionality
+
+// Reference to the chat in the database
+const chatRef = ref(db, 'chat');
+
+// Function to add a message to the chat
+function addMessageToChat(message) {
+    const messagesContainer = document.getElementById('chat-messages');
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    messagesContainer.appendChild(messageElement);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;  // Scroll to the bottom
+}
+
+// Listen for new messages
+onValue(chatRef, (snapshot) => {
+    const messagesContainer = document.getElementById('chat-messages');
+    messagesContainer.innerHTML = '';  // Clear existing messages
+    snapshot.forEach(childSnapshot => {
+        const message = childSnapshot.val();
+        addMessageToChat(message);
+    });
+});
+
+// Send a new message
+document.getElementById('send-message-btn').addEventListener('click', () => {
+    const messageInput = document.getElementById('chat-input');
+    const newMessage = messageInput.value;
+    if (newMessage) {
+        push(chatRef, newMessage);
+        messageInput.value = '';  // Clear the input
+    }
 });
