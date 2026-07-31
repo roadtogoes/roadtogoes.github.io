@@ -1,25 +1,40 @@
 {
+  "id": "/",
   "name": "Pastelería Canela",
   "short_name": "Canela",
   "description": "Repostería artesanal en León. Pedidos online con envío a domicilio y recogida en tienda.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#120A07",
   "theme_color": "#120A07",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "categories": ["food", "shopping"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
